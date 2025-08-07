@@ -328,6 +328,26 @@
                         </div>
                         
                         <div class="info-row">
+                            <span class="info-label">Total Lots:</span>
+                            <span class="info-value">${park.lots || '-'}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Vacant Lots:</span>
+                            <span class="info-value">${park.vacant_lots || '0'}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Homes for Sale:</span>
+                            <span class="info-value">${park.homes_for_sale || '0'}</span>
+                        </div>
+                        
+                        <div class="info-row">
+                            <span class="info-label">Vacant Homes:</span>
+                            <span class="info-value">${park.vacant_homes || '0'}</span>
+                        </div>
+                        
+                        <div class="info-row">
                             <span class="info-label">Utilities Included:</span>
                             <div class="utilities">
                                 <span class="utility-badge ${park.water_included ? 'active' : ''}">Water</span>

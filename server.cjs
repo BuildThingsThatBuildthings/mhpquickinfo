@@ -28,7 +28,10 @@ db.serialize(() => {
     manager_address TEXT,
     community_email TEXT,
     office_hours TEXT,
-    emergency_contact TEXT,
+    lots INTEGER DEFAULT 0,
+    vacant_lots INTEGER DEFAULT 0,
+    homes_for_sale INTEGER DEFAULT 0,
+    vacant_homes INTEGER DEFAULT 0,
     notes TEXT,
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
@@ -82,7 +85,10 @@ app.post("/api/park/:code", (req, res) => {
     manager_address,
     community_email,
     office_hours,
-    emergency_contact,
+    lots,
+    vacant_lots,
+    homes_for_sale,
+    vacant_homes,
     notes,
   } = req.body;
 
@@ -90,8 +96,8 @@ app.post("/api/park/:code", (req, res) => {
     park_code, park_name, park_address, lot_rent,
     water_included, trash_included, sewer_included, electric_included,
     manager_name, manager_phone, manager_address,
-    community_email, office_hours, emergency_contact, notes, last_updated
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+    community_email, office_hours, lots, vacant_lots, homes_for_sale, vacant_homes, notes, last_updated
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
 
   db.run(
     sql,
@@ -109,7 +115,10 @@ app.post("/api/park/:code", (req, res) => {
       manager_address,
       community_email,
       office_hours,
-      emergency_contact,
+      lots || 0,
+      vacant_lots || 0,
+      homes_for_sale || 0,
+      vacant_homes || 0,
       notes,
     ],
     function (err) {

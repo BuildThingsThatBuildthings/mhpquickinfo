@@ -217,9 +217,26 @@
                 <input type="text" id="officeHours" name="office_hours" placeholder="e.g., Mon-Fri 9AM-5PM">
             </div>
 
+            <div class="section-title">Park Inventory</div>
+
             <div class="form-group">
-                <label for="emergencyContact">Emergency Contact</label>
-                <input type="text" id="emergencyContact" name="emergency_contact">
+                <label for="lots">Total Lots</label>
+                <input type="number" id="lots" name="lots" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="vacantLots">Vacant Lots</label>
+                <input type="number" id="vacantLots" name="vacant_lots" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="homesForSale">Homes for Sale</label>
+                <input type="number" id="homesForSale" name="homes_for_sale" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="vacantHomes">Vacant Homes</label>
+                <input type="number" id="vacantHomes" name="vacant_homes" min="0">
             </div>
 
             <div class="section-title">Additional Information</div>
@@ -255,7 +272,10 @@
                     document.getElementById('managerAddress').value = data.manager_address || '';
                     document.getElementById('communityEmail').value = data.community_email || '';
                     document.getElementById('officeHours').value = data.office_hours || '';
-                    document.getElementById('emergencyContact').value = data.emergency_contact || '';
+                    document.getElementById('lots').value = data.lots || '';
+                    document.getElementById('vacantLots').value = data.vacant_lots || '';
+                    document.getElementById('homesForSale').value = data.homes_for_sale || '';
+                    document.getElementById('vacantHomes').value = data.vacant_homes || '';
                     document.getElementById('notes').value = data.notes || '';
                 }
             } catch (error) {
@@ -279,7 +299,10 @@
                 manager_address: document.getElementById('managerAddress').value,
                 community_email: document.getElementById('communityEmail').value,
                 office_hours: document.getElementById('officeHours').value,
-                emergency_contact: document.getElementById('emergencyContact').value,
+                lots: parseInt(document.getElementById('lots').value) || 0,
+                vacant_lots: parseInt(document.getElementById('vacantLots').value) || 0,
+                homes_for_sale: parseInt(document.getElementById('homesForSale').value) || 0,
+                vacant_homes: parseInt(document.getElementById('vacantHomes').value) || 0,
                 notes: document.getElementById('notes').value
             };
 

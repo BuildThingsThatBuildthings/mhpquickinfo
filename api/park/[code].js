@@ -54,7 +54,10 @@ export default async function handler(req, res) {
         manager_address,
         community_email,
         office_hours,
-        emergency_contact,
+        lots,
+        vacant_lots,
+        homes_for_sale,
+        vacant_homes,
         notes,
       } = incomingBody || {};
 
@@ -73,7 +76,10 @@ export default async function handler(req, res) {
         manager_address,
         community_email,
         office_hours,
-        emergency_contact,
+        lots: typeof lots === "number" ? lots : Number(lots) || 0,
+        vacant_lots: typeof vacant_lots === "number" ? vacant_lots : Number(vacant_lots) || 0,
+        homes_for_sale: typeof homes_for_sale === "number" ? homes_for_sale : Number(homes_for_sale) || 0,
+        vacant_homes: typeof vacant_homes === "number" ? vacant_homes : Number(vacant_homes) || 0,
         notes,
         last_updated: new Date().toISOString(),
       };
