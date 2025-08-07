@@ -8,7 +8,6 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
 
 const db = new sqlite3.Database('./park_data.db');
 
@@ -109,12 +108,16 @@ app.post('/api/park/:code', (req, res) => {
   });
 });
 
-app.get('/form/:code', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'form.html'));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+app.get('/form/:code', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'form.html'));
 });
 
 app.listen(PORT, () => {
