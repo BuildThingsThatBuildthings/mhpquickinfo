@@ -1,14 +1,22 @@
 {
+  "version": 2,
   "functions": {
-    "api/*.js": {
-      "maxDuration": 10
-    },
-    "api/park/*.js": {
+    "api/**/*.js": {
       "maxDuration": 10
     }
   },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https:; font-src 'self' data:;"
+        }
+      ]
+    }
+  ],
   "rewrites": [
-    { "source": "/api/parks", "destination": "/api/parks" },
     { "source": "/api/park/:code", "destination": "/api/park/[code]" },
     { "source": "/form/:code", "destination": "/form.html" },
     { "source": "/dashboard", "destination": "/dashboard.html" },
