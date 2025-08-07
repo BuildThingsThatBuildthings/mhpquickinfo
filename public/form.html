@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park Information Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .park-code {
+            color: #667eea;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #5a67d8;
+        }
+
+        .success-message {
+            background: #48bb78;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f56565;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Park Information Form</h1>
+        <div class="park-code" id="parkCodeDisplay">Loading...</div>
+        
+        <div class="success-message" id="successMessage">
+            Information saved successfully!
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            Error saving information. Please try again.
+        </div>
+
+        <form id="parkForm">
+            <div class="section-title">Basic Information</div>
+            
+            <div class="form-group">
+                <label for="parkName">Park Name</label>
+                <input type="text" id="parkName" name="park_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="parkAddress">Park Address</label>
+                <input type="text" id="parkAddress" name="park_address">
+            </div>
+
+            <div class="form-group">
+                <label for="lotRent">Lot Rent ($)</label>
+                <input type="number" id="lotRent" name="lot_rent" step="0.01">
+            </div>
+
+            <div class="section-title">Utilities Included</div>
+            
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="water_included">
+                    Water
+                </label>
+                <label>
+                    <input type="checkbox" name="trash_included">
+                    Trash
+                </label>
+                <label>
+                    <input type="checkbox" name="sewer_included">
+                    Sewer
+                </label>
+                <label>
+                    <input type="checkbox" name="electric_included">
+                    Electric
+                </label>
+            </div>
+
+            <div class="section-title">Management</div>
+
+            <div class="form-group">
+                <label for="managerName">Manager Name</label>
+                <input type="text" id="managerName" name="manager_name">
+            </div>
+
+            <div class="form-group">
+                <label for="managerPhone">Manager Phone</label>
+                <input type="tel" id="managerPhone" name="manager_phone">
+            </div>
+
+            <div class="form-group">
+                <label for="managerAddress">Manager Address</label>
+                <input type="text" id="managerAddress" name="manager_address">
+            </div>
+
+            <div class="section-title">Contact Information</div>
+
+            <div class="form-group">
+                <label for="communityEmail">Community Email</label>
+                <input type="email" id="communityEmail" name="community_email">
+            </div>
+
+            <div class="form-group">
+                <label for="officeHours">Office Hours</label>
+                <input type="text" id="officeHours" name="office_hours" placeholder="e.g., Mon-Fri 9AM-5PM">
+            </div>
+
+            <div class="form-group">
+                <label for="emergencyContact">Emergency Contact</label>
+                <input type="text" id="emergencyContact" name="emergency_contact">
+            </div>
+
+            <div class="section-title">Additional Information</div>
+
+            <div class="form-group">
+                <label for="notes">Notes / Announcements</label>
+                <textarea id="notes" name="notes"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Save Information</button>
+        </form>
+    </div>
+
+    <script>
+        const parkCode = window.location.pathname.split('/').pop().toUpperCase();
+        document.getElementById('parkCodeDisplay').textContent = `Park Code: ${parkCode}`;
+
+        async function loadParkData() {
+            try {
+                const response = await fetch(`/api/park/${parkCode}`);
+                const data = await response.json();
+                
+                if (data && data.park_name) {
+                    document.getElementById('parkName').value = data.park_name || '';
+                    document.getElementById('parkAddress').value = data.park_address || '';
+                    document.getElementById('lotRent').value = data.lot_rent || '';
+                    document.querySelector('[name="water_included"]').checked = data.water_included === 1;
+                    document.querySelector('[name="trash_included"]').checked = data.trash_included === 1;
+                    document.querySelector('[name="sewer_included"]').checked = data.sewer_included === 1;
+                    document.querySelector('[name="electric_included"]').checked = data.electric_included === 1;
+                    document.getElementById('managerName').value = data.manager_name || '';
+                    document.getElementById('managerPhone').value = data.manager_phone || '';
+                    document.getElementById('managerAddress').value = data.manager_address || '';
+                    document.getElementById('communityEmail').value = data.community_email || '';
+                    document.getElementById('officeHours').value = data.office_hours || '';
+                    document.getElementById('emergencyContact').value = data.emergency_contact || '';
+                    document.getElementById('notes').value = data.notes || '';
+                }
+            } catch (error) {
+                console.error('Error loading park data:', error);
+            }
+        }
+
+        document.getElementById('parkForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                park_name: document.getElementById('parkName').value,
+                park_address: document.getElementById('parkAddress').value,
+                lot_rent: parseFloat(document.getElementById('lotRent').value) || 0,
+                water_included: document.querySelector('[name="water_included"]').checked,
+                trash_included: document.querySelector('[name="trash_included"]').checked,
+                sewer_included: document.querySelector('[name="sewer_included"]').checked,
+                electric_included: document.querySelector('[name="electric_included"]').checked,
+                manager_name: document.getElementById('managerName').value,
+                manager_phone: document.getElementById('managerPhone').value,
+                manager_address: document.getElementById('managerAddress').value,
+                community_email: document.getElementById('communityEmail').value,
+                office_hours: document.getElementById('officeHours').value,
+                emergency_contact: document.getElementById('emergencyContact').value,
+                notes: document.getElementById('notes').value
+            };
+
+            try {
+                const response = await fetch(`/api/park/${parkCode}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Failed to save');
+                }
+            } catch (error) {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 5000);
+            }
+        });
+
+        loadParkData();
+    </script>
+</body>
+</html>
