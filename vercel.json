@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 10
+    },
+    "api/park/*.js": {
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    { "source": "/api/parks", "destination": "/api/parks" },
+    { "source": "/api/park/:code", "destination": "/api/park/[code]" },
+    { "source": "/form/:code", "destination": "/public/form.html" },
+    { "source": "/dashboard", "destination": "/public/dashboard.html" },
+    { "source": "/", "destination": "/public/dashboard.html" }
+  ]
+}
