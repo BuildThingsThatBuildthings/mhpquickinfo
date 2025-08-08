@@ -57,15 +57,23 @@ export default async function handler(req, res) {
         emergency_contact,
         likes_reasons,
         improvements,
+        total_lots,
+        vacant_lots,
+        homes_for_sale,
+        homes_for_rent,
         notes,
       } = incomingBody || {};
+
+      const toInt = (v) => {
+        const n = Number(v);
+        return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 0;
+      };
 
       const parkData = {
         park_code: parkCode,
         park_name,
         park_address,
-        lot_rent:
-          typeof lot_rent === "number" ? lot_rent : Number(lot_rent) || 0,
+        lot_rent: typeof lot_rent === "number" ? lot_rent : Number(lot_rent) || 0,
         water_included: water_included ? 1 : 0,
         trash_included: trash_included ? 1 : 0,
         sewer_included: sewer_included ? 1 : 0,
@@ -78,6 +86,10 @@ export default async function handler(req, res) {
         emergency_contact,
         likes_reasons,
         improvements,
+        total_lots: toInt(total_lots),
+        vacant_lots: toInt(vacant_lots),
+        homes_for_sale: toInt(homes_for_sale),
+        homes_for_rent: toInt(homes_for_rent),
         notes,
         last_updated: new Date().toISOString(),
       };

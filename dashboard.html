@@ -480,6 +480,23 @@
                         </div>
                         
                         <div class="info-row">
+                            <span class="info-label">Total Lots:</span>
+                            <span class="info-value">${park.total_lots ?? '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Vacant Lots:</span>
+                            <span class="info-value">${park.vacant_lots ?? '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Homes for Sale:</span>
+                            <span class="info-value">${park.homes_for_sale ?? '-'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Homes for Rent:</span>
+                            <span class="info-value">${park.homes_for_rent ?? '-'}</span>
+                        </div>
+                        
+                        <div class="info-row">
                             <span class="info-label">Manager:</span>
                             <span class="info-value">${
                               park.manager_name || "-"

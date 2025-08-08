@@ -217,6 +217,12 @@
           <div class="hint">Optional; helps guide improvements</div>
         </div>
 
+        <div class="section-title">Lots & Homes</div>
+        <div class="form-group"><label for="totalLots">Total Lots</label><input type="number" id="totalLots" name="total_lots" min="0" step="1"></div>
+        <div class="form-group"><label for="vacantLots">Vacant Lots</label><input type="number" id="vacantLots" name="vacant_lots" min="0" step="1"></div>
+        <div class="form-group"><label for="homesForSale">Homes for Sale</label><input type="number" id="homesForSale" name="homes_for_sale" min="0" step="1"></div>
+        <div class="form-group"><label for="homesForRent">Homes for Rent</label><input type="number" id="homesForRent" name="homes_for_rent" min="0" step="1"></div>
+
         <div class="section-title">Additional Information</div>
         <div class="form-group">
           <label for="notes">Notes / Announcements</label
@@ -267,6 +273,10 @@
               data.likes_reasons || "";
             document.getElementById("improvements").value =
               data.improvements || "";
+            document.getElementById("totalLots").value = data.total_lots || '';
+            document.getElementById("vacantLots").value = data.vacant_lots || '';
+            document.getElementById("homesForSale").value = data.homes_for_sale || '';
+            document.getElementById("homesForRent").value = data.homes_for_rent || '';
             document.getElementById("notes").value = data.notes || "";
           }
         } catch (error) {
@@ -301,6 +311,10 @@
               document.getElementById("emergencyContact").value,
             likes_reasons: document.getElementById("likesReasons").value,
             improvements: document.getElementById("improvements").value,
+            total_lots: parseInt(document.getElementById('totalLots').value || '0', 10),
+            vacant_lots: parseInt(document.getElementById('vacantLots').value || '0', 10),
+            homes_for_sale: parseInt(document.getElementById('homesForSale').value || '0', 10),
+            homes_for_rent: parseInt(document.getElementById('homesForRent').value || '0', 10),
             notes: document.getElementById("notes").value,
           };
 

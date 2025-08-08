@@ -31,6 +31,10 @@ db.serialize(() => {
     emergency_contact TEXT,
     likes_reasons TEXT,
     improvements TEXT,
+    total_lots INTEGER DEFAULT 0,
+    vacant_lots INTEGER DEFAULT 0,
+    homes_for_sale INTEGER DEFAULT 0,
+    homes_for_rent INTEGER DEFAULT 0,
     notes TEXT,
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
@@ -39,12 +43,12 @@ db.serialize(() => {
   db.all("PRAGMA table_info(parks)", (err, rows) => {
     if (err) return;
     const cols = new Set(rows.map((r) => r.name));
-    if (!cols.has("likes_reasons")) {
-      db.run("ALTER TABLE parks ADD COLUMN likes_reasons TEXT");
-    }
-    if (!cols.has("improvements")) {
-      db.run("ALTER TABLE parks ADD COLUMN improvements TEXT");
-    }
+    if (!cols.has("likes_reasons")) db.run("ALTER TABLE parks ADD COLUMN likes_reasons TEXT");
+    if (!cols.has("improvements")) db.run("ALTER TABLE parks ADD COLUMN improvements TEXT");
+    if (!cols.has("total_lots")) db.run("ALTER TABLE parks ADD COLUMN total_lots INTEGER DEFAULT 0");
+    if (!cols.has("vacant_lots")) db.run("ALTER TABLE parks ADD COLUMN vacant_lots INTEGER DEFAULT 0");
+    if (!cols.has("homes_for_sale")) db.run("ALTER TABLE parks ADD COLUMN homes_for_sale INTEGER DEFAULT 0");
+    if (!cols.has("homes_for_rent")) db.run("ALTER TABLE parks ADD COLUMN homes_for_rent INTEGER DEFAULT 0");
   });
 });
 
@@ -83,6 +87,11 @@ app.post("/api/park/:code", (req, res) => {
     return;
   }
 
+  const toInt = (v) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? Math.max(0, Math.trunc(n)) : 0;
+  };
+
   const {
     park_name,
     park_address,
@@ -99,6 +108,10 @@ app.post("/api/park/:code", (req, res) => {
     emergency_contact,
     likes_reasons,
     improvements,
+    total_lots,
+    vacant_lots,
+    homes_for_sale,
+    homes_for_rent,
     notes,
   } = req.body;
 
@@ -107,8 +120,10 @@ app.post("/api/park/:code", (req, res) => {
     water_included, trash_included, sewer_included, electric_included,
     manager_name, manager_phone, manager_address,
     community_email, office_hours, emergency_contact,
-    likes_reasons, improvements, notes, last_updated
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+    likes_reasons, improvements,
+    total_lots, vacant_lots, homes_for_sale, homes_for_rent,
+    notes, last_updated
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
 
   db.run(
     sql,
@@ -129,6 +144,10 @@ app.post("/api/park/:code", (req, res) => {
       emergency_contact,
       likes_reasons,
       improvements,
+      toInt(total_lots),
+      toInt(vacant_lots),
+      toInt(homes_for_sale),
+      toInt(homes_for_rent),
       notes,
     ],
     function (err) {
