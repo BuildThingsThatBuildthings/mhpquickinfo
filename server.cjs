@@ -28,13 +28,24 @@ db.serialize(() => {
     manager_address TEXT,
     community_email TEXT,
     office_hours TEXT,
-    lots INTEGER DEFAULT 0,
-    vacant_lots INTEGER DEFAULT 0,
-    homes_for_sale INTEGER DEFAULT 0,
-    vacant_homes INTEGER DEFAULT 0,
+    emergency_contact TEXT,
+    likes_reasons TEXT,
+    improvements TEXT,
     notes TEXT,
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
+
+  // Lightweight migration for new columns if upgrading existing DB
+  db.all("PRAGMA table_info(parks)", (err, rows) => {
+    if (err) return;
+    const cols = new Set(rows.map((r) => r.name));
+    if (!cols.has("likes_reasons")) {
+      db.run("ALTER TABLE parks ADD COLUMN likes_reasons TEXT");
+    }
+    if (!cols.has("improvements")) {
+      db.run("ALTER TABLE parks ADD COLUMN improvements TEXT");
+    }
+  });
 });
 
 app.get("/api/parks", (req, res) => {
@@ -85,10 +96,9 @@ app.post("/api/park/:code", (req, res) => {
     manager_address,
     community_email,
     office_hours,
-    lots,
-    vacant_lots,
-    homes_for_sale,
-    vacant_homes,
+    emergency_contact,
+    likes_reasons,
+    improvements,
     notes,
   } = req.body;
 
@@ -96,8 +106,9 @@ app.post("/api/park/:code", (req, res) => {
     park_code, park_name, park_address, lot_rent,
     water_included, trash_included, sewer_included, electric_included,
     manager_name, manager_phone, manager_address,
-    community_email, office_hours, lots, vacant_lots, homes_for_sale, vacant_homes, notes, last_updated
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
+    community_email, office_hours, emergency_contact,
+    likes_reasons, improvements, notes, last_updated
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)`;
 
   db.run(
     sql,
@@ -115,10 +126,9 @@ app.post("/api/park/:code", (req, res) => {
       manager_address,
       community_email,
       office_hours,
-      lots || 0,
-      vacant_lots || 0,
-      homes_for_sale || 0,
-      vacant_homes || 0,
+      emergency_contact,
+      likes_reasons,
+      improvements,
       notes,
     ],
     function (err) {

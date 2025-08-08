@@ -535,6 +535,26 @@
                         `
                             : ""
                         }
+                        ${
+                          park.likes_reasons
+                            ? `
+                        <div class="info-row">
+                            <span class="info-label">Residents like:</span>
+                            <span class="info-value">${park.likes_reasons}</span>
+                        </div>
+                        `
+                            : ""
+                        }
+                        ${
+                          park.improvements
+                            ? `
+                        <div class="info-row">
+                            <span class="info-label">Needs improvement:</span>
+                            <span class="info-value">${park.improvements}</span>
+                        </div>
+                        `
+                            : ""
+                        }
                         
                         <div class="last-updated">
                             Last updated: ${new Date(
